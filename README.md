@@ -14,27 +14,27 @@ The players take turns spinning the wheel and answering questions. When
 it is your turn, you will spin the wheel, and do whatever it says on the sector of the wheel.
 The wheel has the following 12 sectors, randomly distributed:
 
-• One sector for each of the six categories on the Jeopardy! board. When the player
+1. One sector for each of the six categories on the Jeopardy! board. When the player
 spins one of these sectors, he or she must answer the next question in that category.
 The questions are answered in the order of increasing point value. If the player
 answers correctly, he or she is awarded the corresponding points and gets to spin
 again. If incorrect, the corresponding points are subtracted from the player’s score,
 and the player loses his turn. (Negative scores are possible.) If all of the questions in
 the selected category have been answered, the player must spin again.
-• One “lose turn” sector.
-• One “free turn” sector. When this sector comes up, the player gets a token for a free
+2. One “lose turn” sector.
+3. One “free turn” sector. When this sector comes up, the player gets a token for a free
 turn later in the game. The token could be used if the player loses his turn by
 spinning a “lose turn” or answering a question incorrectly in a future turn. If this
 happens, the player could redeem the token and would get to spin the wheel again.
 The number of tokens is unlimited. 
-• One “bankrupt” sector. When this sector comes up, the player loses all of his or her
+4. One “bankrupt” sector. When this sector comes up, the player loses all of his or her
 points for the current round. The player loses his turn, and can’t use a token for a
 second chance.
-• One “player’s choice” sector. When this sector comes up, the player gets to choose
+5. One “player’s choice” sector. When this sector comes up, the player gets to choose
 which category to answer.
-• One “opponents’ choice” sector. When this sector comes up, the player’s opponents
+6. One “opponents’ choice” sector. When this sector comes up, the player’s opponents
 get to select the category.
-• One “spin again” sector. When this sector comes up, the player must spin again.
+7. One “spin again” sector. When this sector comes up, the player must spin again.
 
 The game is played in two rounds. In the second round, the point values are doubled
 from the first round (as in Jeopardy!). At the end of the game, the scores for the two
