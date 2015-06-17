@@ -19,7 +19,7 @@ var wheel = {
 	maxSpeed : Math.PI / 16,
 
 	upTime : 1000, 
-	downTime : 4000, 
+	downTime : 0,
 
 	spinStart : 0,
 
@@ -27,6 +27,12 @@ var wheel = {
 
 	centerX : 200,
 	centerY : 200,
+
+	randomDowntime: function() {
+		var min = 3000;
+		var max = 4000;
+		return Math.random() * (max - min) + min;
+	},
 
 	spin : function() {
 
@@ -83,6 +89,7 @@ var wheel = {
 			wheel.draw();
 
 			$.extend(wheel, optionList);
+			wheel.downTime = wheel.randomDowntime();
 
 		} catch (exceptionData) {
 			alert('Wheel is not loaded ' + exceptionData);
