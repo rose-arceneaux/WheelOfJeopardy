@@ -1,23 +1,30 @@
 $(function(){
-	wheel.init();
-
-	var segments = [
+	var categories = [
 		"TV Shows",
-		"Free Turn",
 		"Capitals",
-		"Lose Turn",
 		"Movies",
-		"Bankrupt",
 		"History",
-		"Player's Choice",
 		"Music",
+		"Quotes"
+	];
+	
+	var specialTurns = [
+		"Free Turn",
+		"Bankrupt",
+		"Lose Turn",
+		"Player's Choice",
 		"Opponents' Choice",
-		"Quotes",
 		"Spin Again"
 	];
-	wheel.segments = segments;
+	wheel.init();
+	wheel.categories = categories;
+	wheel.segments = specialTurns.concat(categories);
 	wheel.update();
-
+	
+	jeopardy.init();
+	jeopardy.segments = categories;
+	jeopardy.update();
+	
 	setTimeout(function() {
 		window.scrollTo(0, 1);
 	}, 0);

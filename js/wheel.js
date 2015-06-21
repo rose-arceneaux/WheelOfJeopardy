@@ -12,6 +12,7 @@ var wheel = {
 
 	colors : [ '#ffff00', '#ffc700', '#ff9100', '#ff6301', '#ff0000', '#c6037e',
 	           '#713697', '#444ea1', '#2772b2', '#0297ba', '#008e5b', '#8ac819' ],
+	categories: [],
 	segments : [],
 
 	seg_colors : [], 
@@ -29,8 +30,8 @@ var wheel = {
 	centerY : 200,
 
 	randomDowntime: function() {
-		var min = 3000;
-		var max = 4000;
+		var min = 1000;
+		var max = 5000;
 		return Math.random() * (max - min) + min;
 	},
 
@@ -42,7 +43,7 @@ var wheel = {
 			wheel.maxSpeed = Math.PI / (16 + Math.random());
 			wheel.frames = 0;
 			//wheel.sound.play();
-
+			wheel.downTime = wheel.randomDowntime();
 			wheel.timerHandle = setInterval(wheel.onTimerTick, wheel.timerDelay);
 		}
 	},
@@ -56,7 +57,7 @@ var wheel = {
 		var duration = (new Date().getTime() - wheel.spinStart);
 		var progress = 0;
 		var finished = false;
-
+		
 		if (duration < wheel.upTime) {
 			progress = duration / wheel.upTime;
 			wheel.angleDelta = wheel.maxSpeed
@@ -78,18 +79,28 @@ var wheel = {
 			clearInterval(wheel.timerHandle);
 			wheel.timerHandle = 0;
 			wheel.angleDelta = 0;
+			if(wheel.checkCategory()) {
+				jeopardy.handleCategory(wheel.getCurrentSegment());
+			}
+			else {
+				wheel.handleSpecialTurn();
+			}
 		}
 	},
-
-	init : function(optionList) {
+	handleSpecialTurn: function(){
+		var current = wheel.getCurrentSegment();
+		console.log(current);
+	},
+	checkCategory: function() {
+		var current = wheel.getCurrentSegment();
+		return $.inArray(current, wheel.categories) > -1;
+	},
+	init : function() {
 		try {
 			wheel.initWheel();
 			//wheel.initAudio();
 			wheel.initCanvas();
 			wheel.draw();
-
-			$.extend(wheel, optionList);
-			wheel.downTime = wheel.randomDowntime();
 
 		} catch (exceptionData) {
 			alert('Wheel is not loaded ' + exceptionData);
@@ -97,18 +108,18 @@ var wheel = {
 
 	},
 
-	initAudio : function() {
-		// var sound = document.createElement('audio');
-// 		sound.setAttribute('src', 'wheel.mp3');
-// 		wheel.sound = sound;
-	},
+	// initAudio : function() {
+	// 	var sound = document.createElement('audio');
+	// 	sound.setAttribute('src', 'wheel.mp3');
+	// 	wheel.sound = sound;
+	// },
 
 	initCanvas : function() {
 		var canvas = $('#wheel #canvas').get(0);
 
 		if ($.browser.msie) {
 			canvas = document.createElement('canvas');
-			$(canvas).attr('width', 1000).attr('height', 600).attr('id', 'canvas').appendTo('.wheel');
+			$(canvas).attr('width', 600).attr('height', 400).attr('id', 'canvas').appendTo('.wheel');
 			canvas = G_vmlCanvasManager.initElement(canvas);
 		}
 
@@ -147,6 +158,11 @@ var wheel = {
 		ctx.clearRect(0, 0, 1000, 800);
 	},
 
+	getCurrentSegment: function() {
+		var i = wheel.segments.length - Math.floor((wheel.angleCurrent / (Math.PI * 2))	* wheel.segments.length) - 1;
+		return wheel.segments[i];
+	},
+
 	drawNeedle : function() {
 		var ctx = wheel.canvasContext;
 		var centerX = wheel.centerX;
@@ -173,7 +189,7 @@ var wheel = {
 		ctx.textBaseline = "middle";
 		ctx.fillStyle = '#000000';
 		ctx.font = "1em Arial";
-		ctx.fillText(wheel.segments[i], centerX + size + 25, centerY);
+		ctx.fillText(wheel.getCurrentSegment(), centerX + size + 25, centerY);
 	},
 
 	drawSegment : function(key, lastAngle, angle) {
@@ -230,7 +246,7 @@ var wheel = {
 		var PI2 = Math.PI * 2;
 
 		ctx.lineWidth    = 1;
-		ctx.strokeStyle  = '#000000';
+		ctx.strokeStyle  = '#003399';
 		ctx.textBaseline = "middle";
 		ctx.textAlign    = "center";
 		ctx.font         = "1em Arial";
@@ -246,7 +262,7 @@ var wheel = {
 		ctx.closePath();
 
 		ctx.fillStyle   = '#ffffff';
-		ctx.strokeStyle = '#000000';
+		ctx.strokeStyle = '#003399';
 		ctx.fill();
 		ctx.stroke();
 
@@ -255,7 +271,7 @@ var wheel = {
 		ctx.closePath();
 
 		ctx.lineWidth   = 5;
-		ctx.strokeStyle = '#000000';
+		ctx.strokeStyle = '#003399';
 		ctx.stroke();
-	},
+	}
 };

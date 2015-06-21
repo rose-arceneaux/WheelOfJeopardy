@@ -1,0 +1,45 @@
+body {
+	font-family: helvetica, Arial, sans-serif;
+}
+div#header {
+	display: block;
+	text-align: center;
+	font-weight: bold;
+	margin: 10px auto;
+}
+div#header h1{
+	font-size: 24px;
+}
+div#header h2{
+	font-size: 20px;
+	margin: 10px auto;
+}
+div#container{
+	width: 704px;
+	margin: 0 auto;
+}
+div#wheel{
+	margin: 30px 50px;
+}
+div#jeopardy div {
+	display: block;
+	margin: 10px 10px;
+	font-size: 16px;
+}
+div#jeopardy div span{
+	display: inline-block;
+	border: 2px solid #003399;
+	width: 100px;
+	height: 30px;
+	margin: 5px 5px;
+	text-align: center;
+	border-radius: 5px;
+	background-color: #3366CC;
+	color: white;
+	line-height: 30px;
+}
+div#jeopardy div#jeopardyCategories span{
+	height: 50px;
+	font-weight: bold;
+	line-height: 50px;
+}
