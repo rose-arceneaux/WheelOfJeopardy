@@ -1,0 +1,307 @@
+{"session": {
+   "id": 34,
+   "r1Categories": [
+      {"catId": 4,
+       "catTitle": "TV Shows",
+       "questions": [
+          {"qId": 1,
+           "text": "She is 'truly outrageous'",
+           "answer": "Jem"
+          },
+          {"qId": 2,
+           "text": "They are 'more than meets the eye'",
+           "answer": "Transformers"
+          },
+          {"qId": 9,
+           "text": "American comedy featuring a talking horse and his owner Wilbur",
+           "answer": "Mister Ed"
+          },
+          {"qId": 10,
+           "text": "The longest running American sitcom, currently with 26 seasons",
+           "answer": "The Simpsons"
+          },
+          {"qId": 3,
+           "text": "This game show allowed the use of lifelines like 50:50 or Phone-a-Friend ",
+           "answer": "Who Wants to Be a Millionaire"
+          }
+       ]
+      },
+      {"catId": 11,
+       "catTitle": "90s Music",
+       "questions": [
+          {"qId": 52,
+           "text": "This artist joined Santana for the song Smooth",
+           "answer": "Rob Thomas"
+          },
+          {"qId": 54,
+           "text": "The lead singer is the son of Bob Dylan and one of their hits is One Headlight",
+           "answer": "Wallflowers"
+          },
+          {"qId": 55,
+           "text": "The other popular boy band besides 'N Sync",
+           "answer": "Backstreet Boys"
+          },
+          {"qId": 53,
+           "text": "Popular for the song Livin' La Vida Loca",
+           "answer": "Ricky Martin"
+          },
+          {"qId": 51,
+           "text": "Wrote the songs Fly and Every Morning",
+           "answer": "Sugar Ray"
+          }
+       ]
+      },
+      {"catId": 1,
+       "catTitle": "Games",
+       "questions": [
+          {"qId": 19,
+           "text": "The nickname of Sonic the Hedgehog's friend Miles Prower",
+           "answer": "Tails"
+          },
+          {"qId": 17,
+           "text": "This Nintendo mascot was first seen throwing barrels at a plumber",
+           "answer": "Donkey Kong"
+          },
+          {"qId": 18,
+           "text": "The video game Pong inspired this 1982 movie featuring Jeff Bridges and Bruce Boxleitner",
+           "answer": "Tron"
+          },
+          {"qId": 16,
+           "text": "This game was originally a sequel to Street Fighter called Street Fighter 89",
+           "answer": "Final Fight"
+          },
+          {"qId": 20,
+           "text": "The name of the red ghost in Pac-Man",
+           "answer": "Blinky"
+          }
+       ]
+      },
+      {"catId": 2,
+       "catTitle": "Cats",
+       "questions": [
+          {"qId": 13,
+           "text": "This cartoon cat loves eating lasagna and picking on a beagle named Odie",
+           "answer": "Garfield"
+          },
+          {"qId": 11,
+           "text": "Grumpy Cat's real name",
+           "answer": "Tardar Sauce"
+          },
+          {"qId": 12,
+           "text": "The main cat in Looney Tunes",
+           "answer": "Sylvester"
+          },
+          {"qId": 14,
+           "text": "This word refers to either a group of kittens or a popular series of e-book readers",
+           "answer": "Kindle"
+          },
+          {"qId": 15,
+           "text": "This cat has been the honorary mayor of Talkeetna, Alaska since July 1997",
+           "answer": "Stubbs"
+          }
+       ]
+      },
+      {"catId": 8,
+       "catTitle": "Currencies",
+       "questions": [
+          {"qId": 39,
+           "text": "The currency of India",
+           "answer": "Rupee"
+          },
+          {"qId": 38,
+           "text": "The currency of Lithuania",
+           "answer": "Litas"
+          },
+          {"qId": 40,
+           "text": "The currency of Mexico",
+           "answer": "Peso"
+          },
+          {"qId": 36,
+           "text": "The currency of Japan",
+           "answer": "Yen"
+          },
+          {"qId": 37,
+           "text": "The currency of Korea",
+           "answer": "Won"
+          }
+       ]
+      },
+      {"catId": 5,
+       "catTitle": "Authors",
+       "questions": [
+          {"qId": 23,
+           "text": "Wrote The Adventures of Tom Sawyer",
+           "answer": "Twain"
+          },
+          {"qId": 25,
+           "text": "Wrote the Harry Potter series",
+           "answer": "Rowling"
+          },
+          {"qId": 21,
+           "text": "Wrote the Lord of the Rings trilogy",
+           "answer": "Tolkien"
+          },
+          {"qId": 22,
+           "text": "Wrote A Perfect Day for Bananafish and The Catcher in the Rye",
+           "answer": "Salinger"
+          },
+          {"qId": 24,
+           "text": "Wrote A Farewell to Arms and The Old Man and the Sea",
+           "answer": "Hemingway"
+          }
+       ]
+      }
+   ],
+   "r2Categories": [
+      {"catId": 6,
+       "catTitle": "Superheroes",
+       "questions": [
+          {"qId": 27,
+           "text": "A tech genius with a metal suit",
+           "answer": "Iron Man"
+          },
+          {"qId": 28,
+           "text": "Often found underwater, this superhero can talk to fish",
+           "answer": "Aquaman"
+          },
+          {"qId": 30,
+           "text": "Patriotic super soldier",
+           "answer": "Captain America"
+          },
+          {"qId": 26,
+           "text": "Catches thieves just like flies",
+           "answer": "Spider-man"
+          },
+          {"qId": 29,
+           "text": "The man of steel",
+           "answer": "Superman"
+          }
+       ]
+      },
+      {"catId": 10,
+       "catTitle": "A Year in History",
+       "questions": [
+          {"qId": 61,
+           "text": "The year that the Declaration of Independence was created and ratified",
+           "answer": "1776"
+          },
+          {"qId": 49,
+           "text": "The Great Plague in London occurred this year",
+           "answer": "1666"
+          },
+          {"qId": 50,
+           "text": "The XXVII Summer Olympic Games were hosted in Sydney in this year",
+           "answer": "2000"
+          },
+          {"qId": 47,
+           "text": "Amelia Earhart flew across the Atlantic solo in this year",
+           "answer": "1932"
+          },
+          {"qId": 46,
+           "text": "This year marked the end of World War II",
+           "answer": "1945"
+          }
+       ]
+      },
+      {"catId": 3,
+       "catTitle": "Dogs",
+       "questions": [
+          {"qId": 6,
+           "text": "Phobia of dogs",
+           "answer": "Cynophobia"
+          },
+          {"qId": 4,
+           "text": "Most common dog in America",
+           "answer": "Labrador Retriever"
+          },
+          {"qId": 5,
+           "text": "Lassie is this breed of dog",
+           "answer": "Collie"
+          },
+          {"qId": 7,
+           "text": "Snoopy is this breed of dog",
+           "answer": "Beagle"
+          },
+          {"qId": 8,
+           "text": "Breed of designer dog that is a cross between a Poodle and a Cocker Spaniel",
+           "answer": "Cockapoo"
+          }
+       ]
+      },
+      {"catId": 12,
+       "catTitle": "Sports Stadiums",
+       "questions": [
+          {"qId": 60,
+           "text": "Home of the Boston Red Sox",
+           "answer": "Fenway Park"
+          },
+          {"qId": 56,
+           "text": "Home of the Chicago Cubs",
+           "answer": "Wrigley Field"
+          },
+          {"qId": 59,
+           "text": "Home of Manchester United F.C.",
+           "answer": "Old Trafford"
+          },
+          {"qId": 57,
+           "text": "Home of the Chicago Bears",
+           "answer": "Soldier Field"
+          },
+          {"qId": 58,
+           "text": "Home of the Detroit Lions",
+           "answer": "Ford Field"
+          }
+       ]
+      },
+      {"catId": 7,
+       "catTitle": "Famous Quotes",
+       "questions": [
+          {"qId": 33,
+           "text": "And now that you don’t have to be perfect, you can be good.",
+           "answer": "John Steinbeck"
+          },
+          {"qId": 32,
+           "text": "It does not matter how slowly you go, as long as you do not stop.",
+           "answer": "Confucius"
+          },
+          {"qId": 31,
+           "text": "An eye for eye only ends up making the whole world blind.",
+           "answer": "Mahatma Gandhi"
+          },
+          {"qId": 35,
+           "text": "I am a great believer in luck, and I find the harder I work, the more I have of it.",
+           "answer": "Thomas Jefferson"
+          },
+          {"qId": 34,
+           "text": "“Never put off till tomorrow what may be done day after tomorrow just as well.” ",
+           "answer": "Mark Twain"
+          }
+       ]
+      },
+      {"catId": 9,
+       "catTitle": "Monsters in Movies",
+       "questions": [
+          {"qId": 41,
+           "text": "One of the original giant Japanese monsters. A radioactive reptile",
+           "answer": "Godzilla"
+          },
+          {"qId": 43,
+           "text": "This creature is said to be weak to silver and is only seen at night",
+           "answer": "Werewolf"
+          },
+          {"qId": 45,
+           "text": "This monster was captured from his home island to be displayed in New York City",
+           "answer": "King Kong"
+          },
+          {"qId": 42,
+           "text": "Undead creatures that seek to eat what they once were",
+           "answer": "Zombies"
+          },
+          {"qId": 44,
+           "text": "This dark creature stalked and attacked a crew on a spaceship",
+           "answer": "Alien"
+          }
+       ]
+      }
+   ]
+}}

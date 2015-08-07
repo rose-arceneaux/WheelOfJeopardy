@@ -1,29 +1,40 @@
 $(function(){
-	var categories = [
-		"TV Shows",
-		"Capitals",
-		"Movies",
-		"History",
-		"Music",
-		"Quotes"
-	];
+	var player1 = $.extend(true, {}, Player);
+	player1.init("Jean", 0);
+	var player2 = $.extend(true, {}, Player);
+	player2.init("Momo", 1);
+	var player3 = $.extend(true, {}, Player);
+	player3.init("Superman", 2);
 	
-	var specialTurns = [
-		"Free Turn",
-		"Bankrupt",
-		"Lose Turn",
-		"Player's Choice",
-		"Opponents' Choice",
-		"Spin Again"
-	];
+	var wheel = Wheel();
 	wheel.init();
-	wheel.categories = categories;
-	wheel.segments = specialTurns.concat(categories);
-	wheel.update();
+	wheel.setPlayers(player1, player2, player3);
 	
-	jeopardy.init();
-	jeopardy.segments = categories;
-	jeopardy.update();
+	var categories = [];
+	$.ajax({
+	  url: "js/questions.json",
+	  success: function(response) {
+		var data = response.session;
+		var questions, category_id, category_title;
+		for (var i in data.r1Categories) {
+			jeopardy.jeopardy_r1[i] = [];
+			category_id = data.r1Categories[i].catId;
+			category_title = data.r1Categories[i].catTitle;
+			categories.push(category_title);
+			jeopardy.category_list[category_title] = category_id;
+			questions = data.r1Categories[i].questions;
+			for (var j in questions) {
+				jeopardy.jeopardy_r1[i][j] = $.extend(true, {}, Question);
+				jeopardy.jeopardy_r1[i][j].setQuestion(questions[j].id, questions[j].text, questions[j].answer, category_id, eval(j+1));
+			}
+		}
+		jeopardy.segments = categories;
+		jeopardy.update();
+		
+		wheel.setCategories(categories);
+		wheel.update();
+	  }
+	});
 	
 	setTimeout(function() {
 		window.scrollTo(0, 1);

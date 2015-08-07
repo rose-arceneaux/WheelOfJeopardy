@@ -1,120 +1,53 @@
-var wheel = {
+var Wheel = (function() {
 
-	timerHandle : 0,
-	timerDelay : 33,
+	var timerHandle = 0,
+	timerDelay = 33,
 
-	angleCurrent : 0,
-	angleDelta : 0,
+	angleCurrent = 0,
+	angleDelta = 0,
 
-	size : 185,
+	size = 185,
 
-	canvasContext : null,
+	canvasContext = {},
 
-	colors : [ '#ffff00', '#ffc700', '#ff9100', '#ff6301', '#ff0000', '#c6037e',
+	colors = [ '#ffff00', '#ffc700', '#ff9100', '#ff6301', '#ff0000', '#c6037e',
 	           '#713697', '#444ea1', '#2772b2', '#0297ba', '#008e5b', '#8ac819' ],
-	categories: [],
-	segments : [],
-
-	seg_colors : [], 
+	variable_sections = [],
+	static_sections = {
+		// "Free Turn" : "getFreeTurn",
+// 		"Bankrupt": "bankrupt",
+// 		"Lose Turn": "loseTurn",
+// 		"Player's Choice": "popupChoiceWindow",
+// 		"Opponents' Choice": "popupChoiceWindow",
+		"Spin Again": "spinAgain"
+	},
+	segments = [],
+	players = [],
+	turn = 0,
+	spins = 0,
+	maxSpins = 50,
 	
-	maxSpeed : Math.PI / 16,
+	seg_colors = [], 
+	
+	maxSpeed = Math.PI / 16,
 
-	upTime : 1000, 
-	downTime : 0,
+	upTime = 1000, 
+	downTime = 0,
 
-	spinStart : 0,
+	spinStart = 0,
 
-	frames : 0,
+	frames = 0,
 
-	centerX : 200,
-	centerY : 200,
+	centerX = 200,
+	centerY = 200;
 
-	randomDowntime: function() {
+	function randomDowntime() {
 		var min = 1000;
 		var max = 5000;
 		return Math.random() * (max - min) + min;
-	},
+	}
 
-	spin : function() {
-
-		// Start the wheel only if it's not already spinning
-		if (wheel.timerHandle == 0) {
-			wheel.spinStart = new Date().getTime();
-			wheel.maxSpeed = Math.PI / (16 + Math.random());
-			wheel.frames = 0;
-			//wheel.sound.play();
-			wheel.downTime = wheel.randomDowntime();
-			wheel.timerHandle = setInterval(wheel.onTimerTick, wheel.timerDelay);
-		}
-	},
-
-	onTimerTick : function() {
-
-		wheel.frames++;
-
-		wheel.draw();
-
-		var duration = (new Date().getTime() - wheel.spinStart);
-		var progress = 0;
-		var finished = false;
-		
-		if (duration < wheel.upTime) {
-			progress = duration / wheel.upTime;
-			wheel.angleDelta = wheel.maxSpeed
-					* Math.sin(progress * Math.PI / 2);
-		} else {
-			progress = duration / wheel.downTime;
-			wheel.angleDelta = wheel.maxSpeed
-					* Math.sin(progress * Math.PI / 2 + Math.PI / 2);
-			if (progress >= 1)
-				finished = true;
-		}
-
-		wheel.angleCurrent += wheel.angleDelta;
-		while (wheel.angleCurrent >= Math.PI * 2)
-			// Keep the angle in a reasonable range
-			wheel.angleCurrent -= Math.PI * 2;
-
-		if (finished) {
-			clearInterval(wheel.timerHandle);
-			wheel.timerHandle = 0;
-			wheel.angleDelta = 0;
-			if(wheel.checkCategory()) {
-				jeopardy.handleCategory(wheel.getCurrentSegment());
-			}
-			else {
-				wheel.handleSpecialTurn();
-			}
-		}
-	},
-	handleSpecialTurn: function(){
-		var current = wheel.getCurrentSegment();
-		console.log(current);
-	},
-	checkCategory: function() {
-		var current = wheel.getCurrentSegment();
-		return $.inArray(current, wheel.categories) > -1;
-	},
-	init : function() {
-		try {
-			wheel.initWheel();
-			//wheel.initAudio();
-			wheel.initCanvas();
-			wheel.draw();
-
-		} catch (exceptionData) {
-			alert('Wheel is not loaded ' + exceptionData);
-		}
-
-	},
-
-	// initAudio : function() {
-	// 	var sound = document.createElement('audio');
-	// 	sound.setAttribute('src', 'wheel.mp3');
-	// 	wheel.sound = sound;
-	// },
-
-	initCanvas : function() {
+	function initCanvas() {
 		var canvas = $('#wheel #canvas').get(0);
 
 		if ($.browser.msie) {
@@ -122,52 +55,30 @@ var wheel = {
 			$(canvas).attr('width', 600).attr('height', 400).attr('id', 'canvas').appendTo('.wheel');
 			canvas = G_vmlCanvasManager.initElement(canvas);
 		}
+	}
 
-		canvas.addEventListener("click", wheel.spin, false);
-		wheel.canvasContext = canvas.getContext("2d");
-	},
+	function initWheel() {
+		colors;
+	}
 
-	initWheel : function() {
-		wheel.colors;
-	},
+	function draw() {
+		clear();
+		drawWheel();
+		drawNeedle();
+	}
 
-	update : function() {
-		var r = 0;
-		wheel.angleCurrent = ((r + 0.5) / wheel.segments.length) * Math.PI * 2;
-
-		var segments = wheel.segments;
-		var len      = segments.length;
-		var colors   = wheel.colors;
-		var colorLen = colors.length;
-
-		var seg_color = new Array();
-		
-		wheel.seg_color = colors;
-
-		wheel.draw();
-	},
-
-	draw : function() {
-		wheel.clear();
-		wheel.drawWheel();
-		wheel.drawNeedle();
-	},
-
-	clear : function() {
-		var ctx = wheel.canvasContext;
+	function clear() {
+		var ctx = canvasContext;
 		ctx.clearRect(0, 0, 1000, 800);
-	},
-
-	getCurrentSegment: function() {
-		var i = wheel.segments.length - Math.floor((wheel.angleCurrent / (Math.PI * 2))	* wheel.segments.length) - 1;
-		return wheel.segments[i];
-	},
-
-	drawNeedle : function() {
-		var ctx = wheel.canvasContext;
-		var centerX = wheel.centerX;
-		var centerY = wheel.centerY;
-		var size = wheel.size;
+	}
+	
+	function getCurrentSegment() {
+		var i = segments.length - Math.floor((angleCurrent / (Math.PI * 2))	* segments.length) - 1;
+		return segments[i];
+	}
+	
+	function drawNeedle() {
+		var ctx = canvasContext;
 
 		ctx.lineWidth = 1;
 		ctx.strokeStyle = '#000000';
@@ -183,24 +94,19 @@ var wheel = {
 		ctx.stroke();
 		ctx.fill();
 
-		var i = wheel.segments.length - Math.floor((wheel.angleCurrent / (Math.PI * 2))	* wheel.segments.length) - 1;
+		var i = segments.length - Math.floor((angleCurrent / (Math.PI * 2))	* segments.length) - 1;
 
 		ctx.textAlign = "left";
 		ctx.textBaseline = "middle";
 		ctx.fillStyle = '#000000';
 		ctx.font = "1em Arial";
-		ctx.fillText(wheel.getCurrentSegment(), centerX + size + 25, centerY);
-	},
+		ctx.fillText(getCurrentSegment(), centerX + size + 25, centerY);
+	}
 
-	drawSegment : function(key, lastAngle, angle) {
-		var ctx = wheel.canvasContext;
-		var centerX = wheel.centerX;
-		var centerY = wheel.centerY;
-		var size = wheel.size;
+	function drawSegment(key, lastAngle, angle) {
+		var ctx = canvasContext;
 
-		var segments = wheel.segments;
-		var len = wheel.segments.length;
-		var colors = wheel.seg_color;
+		var len = segments.length;
 
 		var value = segments[key];
 		
@@ -226,22 +132,14 @@ var wheel = {
 		ctx.restore();
 
 		ctx.restore();
-	},
+	}
 
-	drawWheel : function() {
-		var ctx = wheel.canvasContext;
-
-		var angleCurrent = wheel.angleCurrent;
+	function drawWheel() {
+		var ctx = canvasContext;
 		var lastAngle    = angleCurrent;
+		var len       = segments.length;
+		var colorsLen = colors.length;
 
-		var segments  = wheel.segments;
-		var len       = wheel.segments.length;
-		var colors    = wheel.colors;
-		var colorsLen = wheel.colors.length;
-
-		var centerX = wheel.centerX;
-		var centerY = wheel.centerY;
-		var size    = wheel.size;
 
 		var PI2 = Math.PI * 2;
 
@@ -253,7 +151,7 @@ var wheel = {
 
 		for (var i = 1; i <= len; i++) {
 			var angle = PI2 * (i / len) + angleCurrent;
-			wheel.drawSegment(i - 1, lastAngle, angle);
+			drawSegment(i - 1, lastAngle, angle);
 			lastAngle = angle;
 		}
 
@@ -274,4 +172,155 @@ var wheel = {
 		ctx.strokeStyle = '#003399';
 		ctx.stroke();
 	}
-};
+	
+	function setSegments() {
+		var segments_arr = $.map(static_sections, function(v, i){
+		  return i;
+		})
+		segments_arr = segments_arr.concat(variable_sections);
+		segments_arr.sort(function() {
+		  return .5 - Math.random();
+		});
+		segments = segments_arr;
+	}
+	
+	function checkCategory() {
+		var current = getCurrentSegment();
+		return $.inArray(current, variable_sections) > -1;
+	}
+	
+    function onTimerTick() {
+		frames++;
+
+		draw();
+
+		var duration = (new Date().getTime() - spinStart);
+		var progress = 0;
+		var finished = false;
+	
+		if (duration < upTime) {
+			progress = duration / upTime;
+			angleDelta = maxSpeed
+					* Math.sin(progress * Math.PI / 2);
+		} else {
+			progress = duration / downTime;
+			angleDelta = maxSpeed
+					* Math.sin(progress * Math.PI / 2 + Math.PI / 2);
+			if (progress >= 1)
+				finished = true;
+		}
+
+		angleCurrent += angleDelta;
+		while (angleCurrent >= Math.PI * 2)
+			// Keep the angle in a reasonable range
+			angleCurrent -= Math.PI * 2;
+
+		if (finished) {
+			clearInterval(timerHandle);
+			timerHandle = 0;
+			angleDelta = 0;
+			var current_segment = getCurrentSegment();
+			spins++;
+			if(checkCategory()) {
+				var points = jeopardy.popupQuestion(current_segment);
+				if (points) {
+					players[turn].calculatePoints(points);
+				}
+			}
+			else {
+				handleSpecialTurn(current_segment);
+			}
+		}
+	}
+	
+	function handleSpecialTurn(current_segment){
+		eval(static_sections[current_segment])();
+	}
+	
+	function getFreeTurn() {
+		players[turn].addToken();
+	}
+	
+	function bankrupt() {
+		players[turn].setBankrupt();
+		players.splice(turn, 1);
+	}
+	
+	function loseTurn() {
+		if(turn < players.length - 1) {
+			turn++;
+		}
+		else {
+			turn = 0;
+		}
+	}
+	
+	function spinAgain() {
+		alert("Spin again!");
+	}
+	
+	function popupChoiceWindow() {
+		console.log("here");
+	}
+	
+	function isMaxSpins() {
+		return spins == maxSpins;
+	}
+	
+	function noMorePlayers() {
+		return players.length < 2;
+	}
+	
+	function stopGame() {
+		return isMaxSpins() || noMorePlayers();
+	}
+	
+	return {
+		spin: function() {
+			// Start the wheel only if it's not already spinning
+			if (timerHandle == 0) {
+				spinStart = new Date().getTime();
+				maxSpeed = Math.PI / (16 + Math.random());
+				frames = 0;
+				//wheel.sound.play();
+				downTime = randomDowntime();
+				timerHandle = setInterval(onTimerTick, timerDelay);
+			}
+		},
+		update: function() {
+			var r = 0;
+			angleCurrent = ((r + 0.5) / segments.length) * Math.PI * 2;
+			draw();
+		},
+		setCategories: function(categories) {
+			variable_sections = categories;
+			setSegments();
+		},
+		setPlayers: function(p1, p2, p3) {
+			players = [p1, p2, p3];
+		},
+		init : function() {
+			try {
+				initWheel();
+				//wheel.initAudio();
+				initCanvas();
+				canvas.addEventListener("click", this.spin, false);
+				canvasContext = canvas.getContext("2d");
+				//wheel.draw();
+
+			} catch (exceptionData) {
+				alert('Wheel is not loaded ' + exceptionData);
+			}
+
+		},
+		addPoints: function(points) {
+			players[turn].calculatePoints(points);
+		}
+	};
+	
+	// initAudio : function() {
+	// 	var sound = document.createElement('audio');
+	// 	sound.setAttribute('src', 'wheel.mp3');
+	// 	wheel.sound = sound;
+	// },
+});
