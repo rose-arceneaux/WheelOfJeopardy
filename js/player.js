@@ -23,8 +23,8 @@ var Player = {
 		$("#player_" + this.id + " .token").html(this.token);
 	},
 	calculatePoints: function (point) {
-		this.score += point;
-		console.log(this.score);
+		this.score = this.score + parseInt(point);
+		console.log(this.name + " : " + this.score);
 		$("#player_" + this.id + " .score").html(this.score);
 	},
 	setBankrupt: function () {

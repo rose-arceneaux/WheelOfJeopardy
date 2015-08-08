@@ -25,7 +25,7 @@ $(function(){
 			questions = data.r1Categories[i].questions;
 			for (var j in questions) {
 				jeopardy.jeopardy_r1[i][j] = $.extend(true, {}, Question);
-				jeopardy.jeopardy_r1[i][j].setQuestion(questions[j].id, questions[j].text, questions[j].answer, category_id, eval(j+1));
+				jeopardy.jeopardy_r1[i][j].setQuestion(questions[j].id, questions[j].text, questions[j].answer, category_id, j);
 			}
 		}
 		jeopardy.segments = categories;

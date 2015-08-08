@@ -10,7 +10,7 @@ var Question = {
 		this.question_text = question;
 		this.answer = answer;
 		this.category_id = category_id;
-		this.easiness = easiness;
+		this.easiness = parseInt(easiness) + 1;
 	},
 	validateAnswer: function(answer, start) {
 		var return_arr = [],

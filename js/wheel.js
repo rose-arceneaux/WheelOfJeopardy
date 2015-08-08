@@ -14,19 +14,20 @@ var Wheel = (function() {
 	           '#713697', '#444ea1', '#2772b2', '#0297ba', '#008e5b', '#8ac819' ],
 	variable_sections = [],
 	static_sections = {
-		// "Free Turn" : "getFreeTurn",
-// 		"Bankrupt": "bankrupt",
-// 		"Lose Turn": "loseTurn",
-// 		"Player's Choice": "popupChoiceWindow",
-// 		"Opponents' Choice": "popupChoiceWindow",
+		"Free Turn" : "getFreeTurn",
+		"Bankrupt": "bankrupt",
+		"Lose Turn": "loseTurn",
+		"Player's Choice": "popupChoiceWindow",
+		"Opponents' Choice": "popupChoiceWindow",
 		"Spin Again": "spinAgain"
 	},
 	segments = [],
 	players = [],
+	players_hash = [0,1,2],
 	turn = 0,
 	spins = 0,
 	maxSpins = 50,
-	
+
 	seg_colors = [], 
 	
 	maxSpeed = Math.PI / 16,
@@ -55,6 +56,11 @@ var Wheel = (function() {
 			$(canvas).attr('width', 600).attr('height', 400).attr('id', 'canvas').appendTo('.wheel');
 			canvas = G_vmlCanvasManager.initElement(canvas);
 		}
+	}
+	function initAudio() {
+		var sound = document.createElement('audio');
+		sound.setAttribute('src', 'js/wheel.mp3');
+		wheel.sound = sound;
 	}
 
 	function initWheel() {
@@ -214,13 +220,13 @@ var Wheel = (function() {
 		while (angleCurrent >= Math.PI * 2)
 			// Keep the angle in a reasonable range
 			angleCurrent -= Math.PI * 2;
-
 		if (finished) {
+			wheel.sound.pause();
 			clearInterval(timerHandle);
 			timerHandle = 0;
 			angleDelta = 0;
 			var current_segment = getCurrentSegment();
-			spins++;
+			displaySpins();
 			if(checkCategory()) {
 				var points = jeopardy.popupQuestion(current_segment);
 				if (points) {
@@ -230,9 +236,40 @@ var Wheel = (function() {
 			else {
 				handleSpecialTurn(current_segment);
 			}
+			if(isGameOver()){
+				getWinner();
+			}
+			else if (goNext(points)){
+				nextPlayer();
+			}
 		}
 	}
-	
+	function goNext(points) {
+		var current_segment = getCurrentSegment();
+		if (current_segment == "Spin Again") {
+			return false;
+		}
+		else if(points && points == -1) {
+			alert("No more questions. Spin again!");
+			return false;
+		}
+		return true;
+	}
+	function displaySpins() {
+		spins++;
+		$("#spins span").html(spins);
+	}
+	function getWinner() {
+		alert("Done!");
+	}
+	function nextPlayer() {
+		if (turn == players_hash.length - 1) {
+			turn = 0;
+		}
+		else {
+			turn++;
+		}
+	}
 	function handleSpecialTurn(current_segment){
 		eval(static_sections[current_segment])();
 	}
@@ -243,16 +280,12 @@ var Wheel = (function() {
 	
 	function bankrupt() {
 		players[turn].setBankrupt();
-		players.splice(turn, 1);
+		players_hash.slice(turn, 1);
 	}
 	
 	function loseTurn() {
-		if(turn < players.length - 1) {
-			turn++;
-		}
-		else {
-			turn = 0;
-		}
+		alert("Lost turn!");
+		nextPlayer();
 	}
 	
 	function spinAgain() {
@@ -264,15 +297,15 @@ var Wheel = (function() {
 	}
 	
 	function isMaxSpins() {
-		return spins == maxSpins;
+		return spins >= maxSpins;
 	}
 	
 	function noMorePlayers() {
-		return players.length < 2;
+		return players_hash.length < 2;
 	}
 	
-	function stopGame() {
-		return isMaxSpins() || noMorePlayers();
+	function isGameOver() {
+		return isMaxSpins() || noMorePlayers() || jeopardy.noMoreQuestions();
 	}
 	
 	return {
@@ -282,7 +315,7 @@ var Wheel = (function() {
 				spinStart = new Date().getTime();
 				maxSpeed = Math.PI / (16 + Math.random());
 				frames = 0;
-				//wheel.sound.play();
+				wheel.sound.play();
 				downTime = randomDowntime();
 				timerHandle = setInterval(onTimerTick, timerDelay);
 			}
@@ -302,7 +335,7 @@ var Wheel = (function() {
 		init : function() {
 			try {
 				initWheel();
-				//wheel.initAudio();
+				initAudio();
 				initCanvas();
 				canvas.addEventListener("click", this.spin, false);
 				canvasContext = canvas.getContext("2d");
@@ -312,15 +345,6 @@ var Wheel = (function() {
 				alert('Wheel is not loaded ' + exceptionData);
 			}
 
-		},
-		addPoints: function(points) {
-			players[turn].calculatePoints(points);
 		}
 	};
-	
-	// initAudio : function() {
-	// 	var sound = document.createElement('audio');
-	// 	sound.setAttribute('src', 'wheel.mp3');
-	// 	wheel.sound = sound;
-	// },
 });
