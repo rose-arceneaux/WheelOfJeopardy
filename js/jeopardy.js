@@ -22,7 +22,7 @@ var jeopardy = {
 				for (var j in questions[i]) {
 					if (!questions[i][j].is_answered) {
 						answer = prompt(questions[i][j].question_text);
-						if (answer && answer.length > 1){ //(answer == questions[i][j].answer) {
+						if (answer && answer.length > 0){ //(answer == questions[i][j].answer) {
 							questions[i][j].is_answered = true;
 							jeopardy.removeQuestion(i, j);
 							return eval(questions[i][j].easiness * this.price.start);

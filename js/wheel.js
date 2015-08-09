@@ -14,16 +14,16 @@ var Wheel = (function() {
 	           '#713697', '#444ea1', '#2772b2', '#0297ba', '#008e5b', '#8ac819' ],
 	variable_sections = [],
 	static_sections = {
-		"Free Turn" : "getFreeTurn",
-		"Bankrupt": "bankrupt",
-		"Lose Turn": "loseTurn",
-		"Player's Choice": "popupChoiceWindow",
-		"Opponents' Choice": "popupChoiceWindow",
-		"Spin Again": "spinAgain"
+		// "Free Turn" : "getFreeTurn",
+		"Bankrupt": "bankrupt"
+		// "Lose Turn": "loseTurn",
+// 		"Player's Choice": "popupChoiceWindow",
+// 		"Opponents' Choice": "popupChoiceWindow",
+// 		"Spin Again": "spinAgain"
 	},
 	segments = [],
 	players = [],
-	players_hash = [0,1,2],
+	current_players = 3,
 	turn = 0,
 	spins = 0,
 	maxSpins = 50,
@@ -229,7 +229,7 @@ var Wheel = (function() {
 			displaySpins();
 			if(checkCategory()) {
 				var points = jeopardy.popupQuestion(current_segment);
-				if (points) {
+				if (points > 0) {
 					players[turn].calculatePoints(points);
 				}
 			}
@@ -250,7 +250,7 @@ var Wheel = (function() {
 			return false;
 		}
 		else if(points && points == -1) {
-			alert("No more questions. Spin again!");
+			alert("No more questions under this category. Spin again!");
 			return false;
 		}
 		return true;
@@ -263,11 +263,19 @@ var Wheel = (function() {
 		alert("Done!");
 	}
 	function nextPlayer() {
-		if (turn == players_hash.length - 1) {
+		if(turn == players.length - 1) {
 			turn = 0;
 		}
 		else {
-			turn++;
+			turn++
+		}
+		if(players[turn].is_bankrupt){
+			if(turn == players.length - 1) {
+				turn = 0;
+			}
+			else {
+				turn++
+			}
 		}
 	}
 	function handleSpecialTurn(current_segment){
@@ -280,7 +288,7 @@ var Wheel = (function() {
 	
 	function bankrupt() {
 		players[turn].setBankrupt();
-		players_hash.slice(turn, 1);
+		current_players--;
 	}
 	
 	function loseTurn() {
@@ -301,7 +309,7 @@ var Wheel = (function() {
 	}
 	
 	function noMorePlayers() {
-		return players_hash.length < 2;
+		return current_players < 2;
 	}
 	
 	function isGameOver() {
