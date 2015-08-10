@@ -53,9 +53,9 @@ div#players > div {
 	width: 150px;
 	margin: 10px 10px;
 	padding: 10px 10px;
-	border: 2px #ff6301 solid;
 	border-radius: 5px;
 	background-color: #ffc700;
+	border: 2px #fff solid;
 	line-height: 1.5;
 }
 div#players > div span.score {
@@ -63,6 +63,9 @@ div#players > div span.score {
 }
 div#players > div.red{
 	background-color: red;
+}
+div#players > div.current {
+	border-color: #ff6301;
 }
 div#spins {
 	margin-left: 60px;

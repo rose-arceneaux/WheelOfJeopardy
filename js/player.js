@@ -22,6 +22,11 @@ var Player = {
 		this.token += 1;
 		$("#player_" + this.id + " .token").html(this.token);
 	},
+	removeOneToken: function() {
+		this.token -= 1;
+		alert("Use one token!");
+		$("#player_" + this.id + " .token").html(this.token);
+	},
 	calculatePoints: function (point) {
 		this.score = this.score + parseInt(point);
 		console.log(this.name + " : " + this.score);
@@ -36,7 +41,11 @@ var Player = {
 		return this.is_bankrupt;
 	},
 	getPlayer: function() {
-		return "<div id='player_" + this.id +"'><span>" + this.name + "</span>" + 
+		var current = "";
+		if(this.id == 0) {
+			current="current"
+		}
+		return "<div id='player_" + this.id +"' class='" + current + "'><span>" + this.name + "</span>" +
 			   "<div>Score: <span class='score'>" + this.score + "</span></div>" +
 			   "<div>Token: <span class='token'>" + this.token + "</span></div></div>";
 	},

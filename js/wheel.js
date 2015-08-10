@@ -14,8 +14,8 @@ var Wheel = (function() {
 	           '#713697', '#444ea1', '#2772b2', '#0297ba', '#008e5b', '#8ac819' ],
 	variable_sections = [],
 	static_sections = {
-		// "Free Turn" : "getFreeTurn",
-		"Bankrupt": "bankrupt"
+		"Free Turn" : "getFreeTurn"
+		// "Bankrupt": "bankrupt"
 		// "Lose Turn": "loseTurn",
 // 		"Player's Choice": "popupChoiceWindow",
 // 		"Opponents' Choice": "popupChoiceWindow",
@@ -249,8 +249,12 @@ var Wheel = (function() {
 		if (current_segment == "Spin Again") {
 			return false;
 		}
-		else if(points && points == -1) {
+		else if(typeof points != undefined && points == -1) {
 			alert("No more questions under this category. Spin again!");
+			return false;
+		}
+		else if(typeof points != undefined && points == 0 && players[turn].checkToken()) {
+			players[turn].removeOneToken();
 			return false;
 		}
 		return true;
@@ -277,6 +281,8 @@ var Wheel = (function() {
 				turn++
 			}
 		}
+		$("div#players > div").removeClass("current");
+		$("div#players > div#player_" + turn).addClass("current");
 	}
 	function handleSpecialTurn(current_segment){
 		eval(static_sections[current_segment])();
@@ -292,8 +298,13 @@ var Wheel = (function() {
 	}
 	
 	function loseTurn() {
-		alert("Lost turn!");
-		nextPlayer();
+		if(players[turn].checkToken()) {
+			players[turn].removeOneToken();
+		}
+		else {
+			alert("Lost turn!");
+			nextPlayer();
+		}
 	}
 	
 	function spinAgain() {
