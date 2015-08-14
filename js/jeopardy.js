@@ -10,6 +10,7 @@ var jeopardy = {
 	jeopardy_r2: [],
 	category_list: {},
 	current: "jeopardy_r1",
+	currentCategory: "r1Categories",
 	max_questions: 48,
 	questions_answered: 0,
 

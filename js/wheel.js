@@ -14,12 +14,12 @@ var Wheel = (function() {
 	           '#713697', '#444ea1', '#2772b2', '#0297ba', '#008e5b', '#8ac819' ],
 	variable_sections = [],
 	static_sections = {
-		// "Free Turn" : "getFreeTurn",
-// 		"Bankrupt": "bankrupt",
-// 		"Lose Turn": "loseTurn",
+		"Free Turn" : "getFreeTurn",
+		"Bankrupt": "bankrupt",
+		"Lose Turn": "loseTurn",
 		"Player's Choice": "popupChoiceWindow",
-		"Opponents' Choice": "popupChoiceWindow"
-		// "Spin Again": "spinAgain"
+		"Opponents' Choice": "popupChoiceWindow",
+		"Spin Again": "spinAgain"
 	},
 	segments = [],
 	players = [],
@@ -245,7 +245,7 @@ var Wheel = (function() {
 	}
 	function gameOver(points) {
 		if(isGameOver()){
-			getWinner();
+			nextGame();
 		}
 		else if (goNext(points)){
 			nextPlayer();
@@ -253,7 +253,10 @@ var Wheel = (function() {
 	}
 	function goNext(points) {
 		var current_segment = getCurrentSegment();
-		if (current_segment == "Spin Again" || current_segment == "Player's Choice" || current_segment == "Opponents' Choice") {
+		if (typeof points != undefined && points > 0) {
+			return true;
+		}
+		else if (current_segment == "Spin Again" || current_segment == "Player's Choice" || current_segment == "Opponents' Choice"){
 			return false;
 		}
 		else if(typeof points != undefined && points == -1) {
@@ -266,12 +269,43 @@ var Wheel = (function() {
 		}
 		return true;
 	}
-	function displaySpins() {
-		spins++;
+	function displaySpins(newgame) {
+		if (typeof newgame != undefined && newgame){
+			spins = 0;
+		}
+		else{
+			spins++;
+		}
 		$("#spins span").html(spins);
 	}
+	function secondRoundInit() {
+		jeopardy.current = "jeopardy_r2";
+		jeopardy.currentCategory = "r2Categories";
+		jeopardy.price = {
+			start: 400,
+			end: 2000,
+			increment: 400
+		};
+		$.ajax({
+		  url: "js/questions.json",
+		  success: function(response) {
+			ajaxCallback(response);
+			displaySpins(true);
+		  }
+		});
+	}
+	function nextGame() {
+		if (round.length < 1) {
+			round.push(players);
+			secondRoundInit();
+		}
+		else {
+			var winner = getWinner()
+			alert("Done! Winner is " + winner);
+		}
+	}
 	function getWinner() {
-		alert("Done!");
+		return "Abc";
 	}
 	function nextPlayer() {
 		if(turn == players.length - 1) {
@@ -339,6 +373,39 @@ var Wheel = (function() {
 		return isMaxSpins() || noMorePlayers() || jeopardy.noMoreQuestions();
 	}
 	
+	function ajaxCallback(response) {
+		var data = response.session;
+		var categories = [];
+		var questions, category_id, category_title, dataCategory = jeopardy.currentCategory, dataCurrent = jeopardy.current;
+		for (var i in data[dataCategory]) {
+			jeopardy[dataCurrent][i] = [];
+			category_id = data[dataCategory][i].catId;
+			category_title = data[dataCategory][i].catTitle;
+			categories.push(category_title);
+			jeopardy.category_list[category_title] = category_id;
+			questions = data[dataCategory][i].questions;
+			for (var j in questions) {
+				jeopardy[dataCurrent][i][j] = $.extend(true, {}, Question);
+				jeopardy[dataCurrent][i][j].setQuestion(questions[j].id, questions[j].text, questions[j].answer, category_id, j);
+			}
+		}
+		jeopardy.segments = categories;
+		jeopardy.update();
+	
+		setCategories(categories);
+		update();
+	}
+	
+	function update() {
+		var r = 0;
+		angleCurrent = ((r + 0.5) / segments.length) * Math.PI * 2;
+		draw();
+	}
+	
+	function setCategories(categories) {
+		variable_sections = categories;
+		setSegments();
+	}
 	return {
 		spin: function() {
 			// Start the wheel only if it's not already spinning
@@ -351,15 +418,6 @@ var Wheel = (function() {
 				timerHandle = setInterval(onTimerTick, timerDelay);
 			}
 		},
-		update: function() {
-			var r = 0;
-			angleCurrent = ((r + 0.5) / segments.length) * Math.PI * 2;
-			draw();
-		},
-		setCategories: function(categories) {
-			variable_sections = categories;
-			setSegments();
-		},
 		setPlayers: function(p1, p2, p3) {
 			players = [p1, p2, p3];
 		},
@@ -368,6 +426,9 @@ var Wheel = (function() {
 		},
 		popupQuestion: function(c) {
 			return popupQuestion(c);
+		},
+		ajaxCallback: function(response) {
+			ajaxCallback(response);
 		},
 		init : function() {
 			try {
