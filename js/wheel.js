@@ -27,7 +27,7 @@ var Wheel = (function() {
 	current_players = 3,
 	turn = 0,
 	spins = 0,
-	maxSpins = 5,
+	maxSpins = 50,
 
 	seg_colors = [], 
 	
@@ -257,15 +257,15 @@ var Wheel = (function() {
 		if (typeof points != undefined && points >= 0) {
 			return true;
 		}
-		else if (current_segment == "Spin Again" || current_segment == "Player's Choice" || current_segment == "Opponents' Choice"){
-			return false;
-		}
 		else if(typeof points != undefined && points == -1) {
 			alert("No more questions under this category. Spin again!");
 			return false;
 		}
 		else if(typeof points != undefined && points == 0 && players[turn].checkToken()) {
 			players[turn].removeOneToken();
+			return false;
+		}
+		else if (current_segment == "Spin Again" || current_segment == "Player's Choice" || current_segment == "Opponents' Choice"){
 			return false;
 		}
 		return true;
@@ -307,7 +307,7 @@ var Wheel = (function() {
 		}
 		else {
 			var winner = getWinner()
-			alert("Done! Winner is " + winner[0] + ". " + winner[0] + "'s point is " + winner[1]);
+			alert("Done! Winner is " + winner[0] + ". <br/>" + winner[0] + "'s point is " + winner[1]);
 		}
 	}
 	function getWinner() {
