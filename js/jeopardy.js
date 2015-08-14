@@ -26,7 +26,7 @@ var jeopardy = {
 			content += "<option value='" + segments[i] + "'>" + segments[i] + "</option>";
 		}
 		content += "</select>";
-		content += "<input type='submit' value='Submit' id='category_btn'>";
+		content += "<input type='submit' value='Submit' id='category_btn' class='modalBtn'>";
 		modal.open({content: "<div>" + title + "</div>" + content});
 	},
 	popupQuestion: function(c) {

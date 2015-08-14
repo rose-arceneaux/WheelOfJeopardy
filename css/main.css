@@ -113,6 +113,6 @@ div#spins {
 	margin: 20px 0;
 	display: block;
 }
-#category_btn {
+.modalBtn {
 	float: right;
 }
