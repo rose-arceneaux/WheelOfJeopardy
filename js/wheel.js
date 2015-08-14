@@ -23,6 +23,7 @@ var Wheel = (function() {
 	},
 	segments = [],
 	players = [],
+	round = 1,
 	current_players = 3,
 	turn = 0,
 	spins = 0,
@@ -221,7 +222,7 @@ var Wheel = (function() {
 			// Keep the angle in a reasonable range
 			angleCurrent -= Math.PI * 2;
 		if (finished) {
-			//wheel.sound.pause();
+			wheel.sound.pause();
 			clearInterval(timerHandle);
 			timerHandle = 0;
 			angleDelta = 0;
@@ -295,17 +296,24 @@ var Wheel = (function() {
 		});
 	}
 	function nextGame() {
-		if (round.length < 1) {
-			round.push(players);
+		if (round < 1) {
+			round++;
 			secondRoundInit();
 		}
 		else {
 			var winner = getWinner()
-			alert("Done! Winner is " + winner);
+			alert("Done! Winner is " + winner[0] + ". " + winner[0] + "'s point is " + winner[1]);
 		}
 	}
 	function getWinner() {
-		return "Abc";
+		var current = 0, winner;
+		for(var i in players) {
+			if (players[i].getScore() >= current) {
+				winner = players[i].getName();
+				current = players[i].getScore();
+			}
+		}
+		return [winner, current];
 	}
 	function nextPlayer() {
 		if(turn == players.length - 1) {
@@ -344,7 +352,6 @@ var Wheel = (function() {
 		}
 		else {
 			alert("Lost turn!");
-			nextPlayer();
 		}
 	}
 	
@@ -413,7 +420,7 @@ var Wheel = (function() {
 				spinStart = new Date().getTime();
 				maxSpeed = Math.PI / (16 + Math.random());
 				frames = 0;
-				//wheel.sound.play();
+				wheel.sound.play();
 				downTime = randomDowntime();
 				timerHandle = setInterval(onTimerTick, timerDelay);
 			}
@@ -433,7 +440,7 @@ var Wheel = (function() {
 		init : function() {
 			try {
 				initWheel();
-				//initAudio();
+				initAudio();
 				initCanvas();
 				canvas.addEventListener("click", this.spin, false);
 				canvasContext = canvas.getContext("2d");

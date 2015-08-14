@@ -1,5 +1,5 @@
 $(function(){
-	var content = "<div id='player_selection>'";
+	var content = "<div id='player_selection'>";
 	for (var i = 0; i < 3; i++) {
 		var index = i + 1;
 		content += '<div>Player ' + index + ': <input type="text" id="name' + i + '"></div>';

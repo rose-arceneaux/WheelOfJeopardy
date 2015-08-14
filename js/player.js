@@ -9,6 +9,9 @@ var Player = {
 	setName: function(name) {
 		this.name = name;
 	},
+	getName: function() {
+		return this.name;
+	},
 	setID: function(id) {
 		this.id = id;
 	},

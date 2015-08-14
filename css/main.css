@@ -15,13 +15,11 @@ div#header h2{
 	margin: 10px auto;
 }
 div#container{
-	width: 100%;
-	min-width: 1400px;
-	margin: 0 auto;
+	width: 1250px;
+	min-width: 1250px;
 }
 div#wheel{
 	margin: 0px 10px;
-	float: left;
 }
 div#jeopardy div {
 	display: block;
@@ -31,7 +29,7 @@ div#jeopardy div {
 div#jeopardy div span{
 	display: inline-block;
 	border: 2px solid #003399;
-	width: 100px;
+	width: 150px;
 	margin: 5px 5px;
 	text-align: center;
 	border-radius: 5px;
@@ -46,10 +44,11 @@ div#jeopardy div#jeopardyCategories span{
 }
 div#players {
 	margin: 20px auto 50px auto;
-	width: 590px;
+	width: 600px;
+	float: right;
 }
 div#players > div {
-	display: inline-block;
+	display: block;
 	width: 150px;
 	margin: 10px 10px;
 	padding: 10px 10px;
@@ -115,4 +114,10 @@ div#spins {
 }
 .modalBtn {
 	float: right;
+}
+#player_selection {
+	margin: 10px 0;
+}
+#player_selection > div {
+	margin-top: 5px;
 }
