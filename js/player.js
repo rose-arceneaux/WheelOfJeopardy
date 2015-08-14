@@ -25,6 +25,10 @@ var Player = {
 		this.token += 1;
 		$("#player_" + this.id + " .token").html(this.token);
 	},
+	resetToken: function() {
+		this.token = 0;
+		$("#player_" + this.id + " .token").html(this.token);
+	},
 	removeOneToken: function() {
 		this.token -= 1;
 		alert("One token is used. Please spin again!");
@@ -35,10 +39,15 @@ var Player = {
 		console.log(this.name + " : " + this.score);
 		$("#player_" + this.id + " .score").html(this.score);
 	},
-	setBankrupt: function () {
-		this.is_bankrupt = true;
-		this.score = 0;
-		$("#player_" + this.id).addClass("red");
+	setBankrupt: function (is_bankrupt) {
+		this.is_bankrupt = is_bankrupt;
+		if(is_bankrupt) {
+			this.score = 0;
+			$("#player_" + this.id).addClass("red");
+		}
+		else{
+			$("#player_" + this.id).removeClass("red");
+		}
 	},
 	checkBankrupt: function() {
 		return this.is_bankrupt;

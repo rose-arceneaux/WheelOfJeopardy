@@ -27,7 +27,7 @@ var Wheel = (function() {
 	current_players = 3,
 	turn = 0,
 	spins = 0,
-	maxSpins = 50,
+	maxSpins = 5,
 
 	seg_colors = [], 
 	
@@ -287,6 +287,10 @@ var Wheel = (function() {
 			end: 2000,
 			increment: 400
 		};
+		for(var i in players) {
+			players[i].setBankrupt(false);
+			players[i].resetToken();
+		}
 		$.ajax({
 		  url: "js/questions.json",
 		  success: function(response) {
@@ -294,9 +298,10 @@ var Wheel = (function() {
 			displaySpins(true);
 		  }
 		});
+		turn = 0;
 	}
 	function nextGame() {
-		if (round < 1) {
+		if (round < 2) {
 			round++;
 			secondRoundInit();
 		}
@@ -342,7 +347,7 @@ var Wheel = (function() {
 	}
 	
 	function bankrupt() {
-		players[turn].setBankrupt();
+		players[turn].setBankrupt(true);
 		current_players--;
 	}
 	
