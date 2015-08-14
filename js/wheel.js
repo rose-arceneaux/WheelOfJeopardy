@@ -14,12 +14,12 @@ var Wheel = (function() {
 	           '#713697', '#444ea1', '#2772b2', '#0297ba', '#008e5b', '#8ac819' ],
 	variable_sections = [],
 	static_sections = {
-		"Free Turn" : "getFreeTurn"
-		// "Bankrupt": "bankrupt"
-		// "Lose Turn": "loseTurn",
-// 		"Player's Choice": "popupChoiceWindow",
-// 		"Opponents' Choice": "popupChoiceWindow",
-// 		"Spin Again": "spinAgain"
+		// "Free Turn" : "getFreeTurn",
+// 		"Bankrupt": "bankrupt",
+// 		"Lose Turn": "loseTurn",
+		"Player's Choice": "popupChoiceWindow",
+		"Opponents' Choice": "popupChoiceWindow"
+		// "Spin Again": "spinAgain"
 	},
 	segments = [],
 	players = [],
@@ -221,32 +221,39 @@ var Wheel = (function() {
 			// Keep the angle in a reasonable range
 			angleCurrent -= Math.PI * 2;
 		if (finished) {
-			wheel.sound.pause();
+			//wheel.sound.pause();
 			clearInterval(timerHandle);
 			timerHandle = 0;
 			angleDelta = 0;
-			var current_segment = getCurrentSegment();
 			displaySpins();
+			var current_segment = getCurrentSegment();
 			if(checkCategory()) {
-				var points = jeopardy.popupQuestion(current_segment);
-				if (points > 0) {
-					players[turn].calculatePoints(points);
-				}
+				var points = popupQuestion(current_segment);
 			}
 			else {
 				handleSpecialTurn(current_segment);
 			}
-			if(isGameOver()){
-				getWinner();
-			}
-			else if (goNext(points)){
-				nextPlayer();
-			}
+			gameOver(points);
+		}
+	}
+	function popupQuestion(current_segment) {
+		var points = jeopardy.popupQuestion(current_segment);
+		if (points > 0) {
+			players[turn].calculatePoints(points);
+		}
+		return points;
+	}
+	function gameOver(points) {
+		if(isGameOver()){
+			getWinner();
+		}
+		else if (goNext(points)){
+			nextPlayer();
 		}
 	}
 	function goNext(points) {
 		var current_segment = getCurrentSegment();
-		if (current_segment == "Spin Again") {
+		if (current_segment == "Spin Again" || current_segment == "Player's Choice" || current_segment == "Opponents' Choice") {
 			return false;
 		}
 		else if(typeof points != undefined && points == -1) {
@@ -312,7 +319,12 @@ var Wheel = (function() {
 	}
 	
 	function popupChoiceWindow() {
-		console.log("here");
+		var current_segment = getCurrentSegment();
+		var player_choice = true;
+		if(current_segment == "Opponents' Choice"){
+			player_choice = false;
+		}
+		jeopardy.popupCategory(player_choice);
 	}
 	
 	function isMaxSpins() {
@@ -334,7 +346,7 @@ var Wheel = (function() {
 				spinStart = new Date().getTime();
 				maxSpeed = Math.PI / (16 + Math.random());
 				frames = 0;
-				wheel.sound.play();
+				//wheel.sound.play();
 				downTime = randomDowntime();
 				timerHandle = setInterval(onTimerTick, timerDelay);
 			}
@@ -351,10 +363,16 @@ var Wheel = (function() {
 		setPlayers: function(p1, p2, p3) {
 			players = [p1, p2, p3];
 		},
+		gameOver: function(p) {
+			gameOver(p);
+		},
+		popupQuestion: function(c) {
+			return popupQuestion(c);
+		},
 		init : function() {
 			try {
 				initWheel();
-				initAudio();
+				//initAudio();
 				initCanvas();
 				canvas.addEventListener("click", this.spin, false);
 				canvasContext = canvas.getContext("2d");

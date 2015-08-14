@@ -36,6 +36,12 @@ $(function(){
 	  }
 	});
 	
+	$("#category_btn").live("click", function(){
+		var category = $("#category_selection").val();
+		var points = wheel.popupQuestion(category);
+		wheel.gameOver(points);
+		modal.close();
+	});
 	setTimeout(function() {
 		window.scrollTo(0, 1);
 	}, 0);

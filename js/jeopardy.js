@@ -13,6 +13,22 @@ var jeopardy = {
 	max_questions: 48,
 	questions_answered: 0,
 
+	popupCategory: function(player_choice){
+		var title, content, segments = jeopardy.segments;
+		if(player_choice) {
+			title = "Player's Choice";
+		}
+		else {
+			title = "Opponent's Choice";
+		}
+		content = "<select id='category_selection'>";
+		for (var i = 0; i < segments.length; i++) {
+			content += "<option value='" + segments[i] + "'>" + segments[i] + "</option>";
+		}
+		content += "</select>";
+		content += "<input type='submit' value='Submit' id='category_btn'>";
+		modal.open({content: "<div>" + title + "</div>" + content});
+	},
 	popupQuestion: function(c) {
 		var answer;
 		var category_id = jeopardy.category_list[c];

@@ -24,7 +24,7 @@ var Player = {
 	},
 	removeOneToken: function() {
 		this.token -= 1;
-		alert("Use one token!");
+		alert("One token is used. Please spin again!");
 		$("#player_" + this.id + " .token").html(this.token);
 	},
 	calculatePoints: function (point) {

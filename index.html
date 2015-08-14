@@ -6,6 +6,7 @@
 <link href="css/reset.css" type="text/css" rel="stylesheet">
 <link href="css/main.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/modal.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/player.js"></script>
 <script type="text/javascript" src="js/question.js"></script>
@@ -25,6 +26,11 @@
 			<canvas id="canvas" width="600" height="400"></canvas>
 		</div>
 		<div id="jeopardy">
+		</div>
+		<div id='overlay' class="hide"></div>
+		<div id='modal' class="hide">
+			<div id='content'></div>
+			<a href='#' id='close'>close</a>
 		</div>
 	</div>
 </body>
