@@ -44,8 +44,10 @@ var jeopardy = {
 							jeopardy.removeQuestion(i, j);
 							return eval(questions[i][j].easiness * this.price.start);
 						}
-						else {
-							return 0;
+						else if (answer != questions[i][j].answer) {
+							questions[i][j].is_answered = true;
+							jeopardy.removeQuestion(i, j);
+							return eval(questions[i][j].easiness * -this.price.start);
 						}
 						break;
 					}
