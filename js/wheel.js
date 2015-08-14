@@ -239,7 +239,7 @@ var Wheel = (function() {
 	}
 	function popupQuestion(current_segment) {
 		var points = jeopardy.popupQuestion(current_segment);
-		if (points != 0) {
+		if (points != 0 && points != -1) {
 			players[turn].calculatePoints(points);
 		}
 		return points;
