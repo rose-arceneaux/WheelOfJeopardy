@@ -288,7 +288,7 @@ var Wheel = (function() {
 			increment: 400
 		};
 		for(var i in players) {
-			players[i].setBankrupt(false);
+			players[i].setBankrupt();
 			players[i].resetToken();
 		}
 		$.ajax({
@@ -347,8 +347,7 @@ var Wheel = (function() {
 	}
 	
 	function bankrupt() {
-		players[turn].setBankrupt(true);
-		current_players--;
+		players[turn].setBankrupt();
 	}
 	
 	function loseTurn() {
