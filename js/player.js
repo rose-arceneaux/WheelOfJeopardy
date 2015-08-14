@@ -40,13 +40,10 @@ var Player = {
 		$("#player_" + this.id + " .score").html(this.score);
 	},
 	setBankrupt: function (is_bankrupt) {
-		this.is_bankrupt = is_bankrupt;
-		if(is_bankrupt) {
-			this.score = 0;
-			$("#player_" + this.id).addClass("red");
-		}
-		else{
-			$("#player_" + this.id).removeClass("red");
+		if (this.score > 0) {
+		    this.score = 0;
+		    console.log(this.name + " : " + this.score);
+		    $("#player_" + this.id + " .score").html(this.score);
 		}
 	},
 	checkBankrupt: function() {
