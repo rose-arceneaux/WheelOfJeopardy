@@ -254,7 +254,7 @@ var Wheel = (function() {
 	}
 	function goNext(points) {
 		var current_segment = getCurrentSegment();
-		if (typeof points != undefined && points > 0) {
+		if (typeof points != undefined && points >= 0) {
 			return true;
 		}
 		else if (current_segment == "Spin Again" || current_segment == "Player's Choice" || current_segment == "Opponents' Choice"){
