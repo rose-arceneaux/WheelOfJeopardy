@@ -261,7 +261,7 @@ var Wheel = (function() {
 			alert("No more questions under this category. Spin again!");
 			return false;
 		}
-		else if(typeof points != undefined && points == 0 && players[turn].checkToken()) {
+		else if(typeof points != undefined && points < -1 && players[turn].checkToken()) {
 			players[turn].removeOneToken();
 			return false;
 		}
