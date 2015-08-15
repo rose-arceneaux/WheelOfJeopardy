@@ -23,6 +23,7 @@ var Wheel = (function() {
 	},
 	segments = [],
 	players = [],
+	scoreArray = [],
 	round = 1,
 	current_players = 3,
 	turn = 0,
@@ -288,7 +289,8 @@ var Wheel = (function() {
 			increment: 400
 		};
 		for(var i in players) {
-			players[i].setBankrupt();
+			scoreArray[i]=players[i].getScore();
+			players[i].resetScore();
 			players[i].resetToken();
 		}
 		$.ajax({
@@ -315,7 +317,7 @@ var Wheel = (function() {
 		for(var i in players) {
 			if (players[i].getScore() >= current) {
 				winner = players[i].getName();
-				current = players[i].getScore();
+				current = players[i].getScore()+scoreArray[i];
 			}
 		}
 		return [winner, current];
