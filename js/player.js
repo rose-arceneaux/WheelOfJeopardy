@@ -46,6 +46,11 @@ var Player = {
 		    $("#player_" + this.id + " .score").html(this.score);
 		}
 	},
+	resetScore: function() {
+		this.score = 0;
+		console.log(this.name + " : " + this.score);
+		$("#player_" + this.id + " .score").html(this.score);
+	},
 	checkBankrupt: function() {
 		return this.is_bankrupt;
 	},
