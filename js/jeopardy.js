@@ -40,11 +40,13 @@ var jeopardy = {
 					if (!questions[i][j].is_answered) {
 						answer = prompt(questions[i][j].question_text);
 						if (answer && answer.length > 0 && answer == questions[i][j].answer) {
+							alert("Correct! You gain $" + eval(questions[i][j].easiness * this.price.start));
 							questions[i][j].is_answered = true;
 							jeopardy.removeQuestion(i, j);
 							return eval(questions[i][j].easiness * this.price.start);
 						}
 						else if (answer != questions[i][j].answer) {
+							alert("Sorry. The correct response was " + questions[i][j].answer + ". You lose $" + eval(questions[i][j].easiness * this.price.start));
 							questions[i][j].is_answered = true;
 							jeopardy.removeQuestion(i, j);
 							return eval(questions[i][j].easiness * -this.price.start);
